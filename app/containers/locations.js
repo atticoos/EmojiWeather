@@ -13,20 +13,20 @@ import * as Routes from '../constants/routes';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
 
-class Forecast extends Component {
+class Locations extends Component {
   getLeftNavItem() {
     return (
       <TouchableOpacity
-        onPress={() => this.props.navigator.push({name: Routes.Locations})}>
-        <Text style={styles.location}>Boston, MA</Text>
+        onPress={() => this.props.navigator.pop()}>
+        <Text style={styles.back}>&lt;</Text>
       </TouchableOpacity>
     );
   }
   getRightNavItem() {
     return (
       <TouchableOpacity
-        onPress={() => this.props.navigator.push({name: Routes.Settings})}>
-        <Text style={styles.gear}>S</Text>
+        onPress={() => this.props.navigator.push({name: Routes.Search})}>
+        <Text style={styles.add}>+</Text>
       </TouchableOpacity>
     )
   }
@@ -35,10 +35,9 @@ class Forecast extends Component {
       <View style={styles.container}>
         <NavBar
           leftItem={this.getLeftNavItem()}
-          rightItem={this.getRightNavItem()} />
-        <View style={styles.weather}>
-          <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>
-        </View>
+          rightItem={this.getRightNavItem()}
+          title='Locations' />
+        <Text style={{fontSize: 64}}>Locations</Text>
       </View>
     );
   }
@@ -50,23 +49,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Blue,
     padding: Styles.screenPadding
   },
-  heading: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  location: {
+  back: {
     color: '#fff',
-    fontSize: 26
+    fontSize: 28
   },
-  gear: {
+  add: {
     color: '#fff',
-    fontSize: 22
-  },
-  weather: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    fontSize: 32
   }
 });
 
-export default Forecast;
+export default Locations;

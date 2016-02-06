@@ -8,6 +8,9 @@ import * as Routes from '../constants/routes';
 
 import Splash from './splash';
 import Forecast from './forecast';
+import Locations from './locations';
+import Search from './search';
+import Settings from './settings';
 
 class App extends Component {
   renderScene(route, navigator){
@@ -16,6 +19,12 @@ class App extends Component {
         return <Splash navigator={navigator} />;
       case Routes.Forecast:
         return <Forecast navigator={navigator} />;
+      case Routes.Locations:
+        return <Locations navigator={navigator} />;
+      case Routes.Search:
+        return <Search navigator={navigator} />;
+      case Routes.Settings:
+        return <Settings navigator={navigator} />;
       default:
         return <Splash navigator={navigator} />;
     }

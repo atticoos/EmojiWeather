@@ -8,17 +8,26 @@ import React, {
   Text
 } from 'react-native';
 import * as Routes from '../constants/routes';
+import Colors from '../constants/colors';
 
 class Splash extends Component {
-  goToForecast() {
-    this.props.navigator.push({name: Routes.Forecast});
+  navigateTo(route) {
+    this.props.navigator.push({name: route});
   }
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight
-          onPress={() => this.goToForecast()}>
-          <Text style={styles.text}>Splash</Text>
+        <TouchableHighlight onPress={() => this.navigateTo(Routes.Forecast)}>
+          <Text style={styles.text}>Forecast</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.navigateTo(Routes.Locations)}>
+          <Text style={styles.text}>Locations</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.navigateTo(Routes.Search)}>
+          <Text style={styles.text}>Search</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => this.navigateTo(Routes.Settings)}>
+          <Text style={styles.text}>Settings</Text>
         </TouchableHighlight>
       </View>
     );
@@ -29,11 +38,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: Colors.Blue
   },
   text: {
     fontSize: 24,
-    color: 'red'
+    color: '#fff'
   }
 });
 
