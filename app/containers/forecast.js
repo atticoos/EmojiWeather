@@ -7,18 +7,30 @@ import React, {
   View,
   Text
 } from 'react-native';
+import {connect} from 'react-redux/native';
+import {getWeather} from '../actions/weather';
+import {toFahrenheit} from '../utils/converters';
+import selector from '../selectors/forecast';
 import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
 import * as Routes from '../constants/routes';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
+import DayForecast from '../components/dayForecast';
+import moment from 'moment';
 
 class Forecast extends Component {
+  componentDidMount() {
+    this.props.dispatch(getWeather());
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('das weather', nextProps.weather);
+  }
   getLeftNavItem() {
     return (
       <TouchableOpacity
         onPress={() => this.props.navigator.push({name: Routes.Locations})}>
-        <Text style={styles.location}>Boston, MA</Text>
+        <Text style={styles.location}>{this.props.location.name}</Text>
       </TouchableOpacity>
     );
   }
@@ -30,6 +42,20 @@ class Forecast extends Component {
       </TouchableOpacity>
     )
   }
+  renderWeather() {
+    return [
+      <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>,
+      <Text style={{fontSize: 32}}>{toFahrenheit(this.props.weather.now.temperature)}</Text>
+    ];
+  }
+  renderLoading() {
+    return <Text style={{fontSize: 64}}>Loading</Text>
+  }
+  renderForecast() {
+    return this.props.weather.upcoming.map(forecast => {
+      return <DayForecast day={forecast.date} temperature={forecast.high} />
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -37,7 +63,14 @@ class Forecast extends Component {
           leftItem={this.getLeftNavItem()}
           rightItem={this.getRightNavItem()} />
         <View style={styles.weather}>
-          <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>
+          {
+            this.props.weather ?
+              this.renderWeather() :
+              this.renderLoading()
+          }
+        </View>
+        <View style={styles.forecast}>
+          {this.props.weather ? this.renderForecast() : null}
         </View>
       </View>
     );
@@ -66,7 +99,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  forecast: {
+    flexDirection: 'row'
   }
 });
 
-export default Forecast;
+export default connect(selector)(Forecast);
