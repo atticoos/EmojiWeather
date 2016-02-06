@@ -7,7 +7,6 @@ import React, {
   Text
 } from 'react-native';
 import Emoji from 'react-native-emoji';
-
 import Colors from '../constants/colors';
 import Styles from '../constants/styles';
 

@@ -10,11 +10,11 @@ import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
 import Styles from '../constants/styles';
 
-class Locations extends Component {
+class Search extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{fontSize: 64}}>Locations</Text>
+        <Text style={{fontSize: 64}}>Search</Text>
       </View>
     );
   }
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Locations;
+export default Search;
