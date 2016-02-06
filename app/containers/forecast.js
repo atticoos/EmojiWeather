@@ -6,6 +6,10 @@ import React, {
   View,
   Text
 } from 'react-native';
+import Emoji from 'react-native-emoji';
+
+import Colors from '../constants/colors';
+import Styles from '../constants/styles';
 
 class Forecast extends Component {
   render() {
@@ -16,7 +20,7 @@ class Forecast extends Component {
           <Text style={styles.gear}>Settings</Text>
         </View>
         <View style={styles.weather}>
-          <Text>Weather today</Text>
+          <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>
         </View>
       </View>
     );
@@ -26,7 +30,7 @@ class Forecast extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'lightblue',
+    backgroundColor: Colors.Blue,
     padding: 20
   },
   heading: {
@@ -40,6 +44,11 @@ const styles = StyleSheet.create({
   gear: {
     color: '#fff',
     fontSize: 22
+  },
+  weather: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
