@@ -4,7 +4,7 @@ export const STATUS_REQUEST = 'request';
 export const STATUS_FAILURE = 'failure';
 export const STATUS_SUCCESS = 'success';
 
-export default const asyncMiddleware = ({dispatch, getState}) => next => action {
+const asyncMiddleware = ({dispatch, getState}) => next => action => {
   var {
     type,
     request,
@@ -21,22 +21,24 @@ export default const asyncMiddleware = ({dispatch, getState}) => next => action 
     status: STATUS_REQUEST
   });
 
-  const dispatchError = error => dispatch(
+  const dispatchError = error => dispatch({
     ...payload,
     type,
     error,
     status: STATUS_FAILURE
-  );
+  });
 
-  const dispatchSuccess = response => dispatch(
+  const dispatchSuccess = response => dispatch({
     type,
     response,
     receivedAt: Date.now(),
     status: STATUS_SUCCESS
-  );
+  });
 
   return request(getState()).then(
     dispatchSuccess,
     dispatchError
   );
 }
+
+export default asyncMiddleware;

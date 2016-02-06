@@ -7,6 +7,9 @@ import React, {
   View,
   Text
 } from 'react-native';
+import {connect} from 'react-redux/native';
+import {getWeather} from '../actions/weather';
+import selector from '../selectors/forecast';
 import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
 import * as Routes from '../constants/routes';
@@ -14,11 +17,14 @@ import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
 
 class Forecast extends Component {
+  componentDidMount() {
+    this.props.dispatch(getWeather());
+  }
   getLeftNavItem() {
     return (
       <TouchableOpacity
         onPress={() => this.props.navigator.push({name: Routes.Locations})}>
-        <Text style={styles.location}>Boston, MA</Text>
+        <Text style={styles.location}>{this.props.location.name}</Text>
       </TouchableOpacity>
     );
   }
@@ -69,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Forecast;
+export default connect(selector)(Forecast);
