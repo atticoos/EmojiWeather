@@ -3,15 +3,23 @@
 import React, {
   Component,
   StyleSheet,
+  TouchableHighlight,
   View,
   Text
 } from 'react-native';
+import * as Routes from '../constants/routes';
 
 class Splash extends Component {
+  goToForecast() {
+    this.props.navigator.push({name: Routes.Forecast});
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Splash</Text>
+        <TouchableHighlight
+          onPress={() => this.goToForecast()}>
+          <Text style={styles.text}>Splash</Text>
+        </TouchableHighlight>
       </View>
     );
   }
