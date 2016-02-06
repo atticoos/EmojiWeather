@@ -9,6 +9,7 @@ import React, {
 } from 'react-native';
 import {connect} from 'react-redux/native';
 import {getWeather} from '../actions/weather';
+import {toFahrenheit} from '../utils/converters';
 import selector from '../selectors/forecast';
 import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
@@ -19,6 +20,9 @@ import NavBar from '../components/navBar';
 class Forecast extends Component {
   componentDidMount() {
     this.props.dispatch(getWeather());
+  }
+  componentWillReceiveProps(nextProps) {
+
   }
   getLeftNavItem() {
     return (
@@ -36,6 +40,15 @@ class Forecast extends Component {
       </TouchableOpacity>
     )
   }
+  renderWeather() {
+    return [
+      <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>,
+      <Text style={{fontSize: 32}}>{toFahrenheit(this.props.weather.now.temperature)}</Text>
+    ];
+  }
+  renderLoading() {
+    return <Text style={{fontSize: 64}}>Loading</Text>
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -43,7 +56,11 @@ class Forecast extends Component {
           leftItem={this.getLeftNavItem()}
           rightItem={this.getRightNavItem()} />
         <View style={styles.weather}>
-          <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>
+          {
+            this.props.weather ?
+              this.renderWeather() :
+              this.renderLoading()
+          }
         </View>
       </View>
     );
