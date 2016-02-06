@@ -43,17 +43,22 @@ class Forecast extends Component {
     )
   }
   renderWeather() {
-    return [
-      <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>,
-      <Text style={{fontSize: 32}}>{toFahrenheit(this.props.weather.now.temperature)}</Text>
-    ];
+    return (
+      <View>
+        <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>
+        <Text style={{fontSize: 32}}>{toFahrenheit(this.props.weather.now.temperature)}</Text>
+      </View>
+    );
   }
   renderLoading() {
     return <Text style={{fontSize: 64}}>Loading</Text>
   }
   renderForecast() {
-    return this.props.weather.upcoming.map(forecast => {
-      return <DayForecast day={forecast.date} temperature={forecast.high} />
+    return this.props.weather.upcoming.map((forecast, index) => {
+      return <DayForecast
+        key={index}
+        day={forecast.date}
+        temperature={forecast.high} />
     });
   }
   render() {
