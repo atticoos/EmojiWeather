@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.Blue,
-    padding: 20
+    padding: Styles.screenPadding
   }
 });
 
