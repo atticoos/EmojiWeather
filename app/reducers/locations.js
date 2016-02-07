@@ -9,7 +9,8 @@ const initialState = [
   {
     latitude: 42.3601,
     longitude: -71.0589,
-    name: 'Boston, MA'
+    name: 'Boston',
+    state: 'MA'
   }
 ];
 

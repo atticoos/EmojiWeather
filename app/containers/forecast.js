@@ -33,7 +33,7 @@ class Forecast extends Component {
     return (
       <TouchableOpacity
         onPress={() => this.props.navigator.push({name: Routes.Locations})}>
-        <Text style={styles.currentLocation}>{this.props.location.name}</Text>
+        <Text style={styles.currentLocation}>{this.props.location.name}, {this.props.location.state}</Text>
       </TouchableOpacity>
     );
   }
