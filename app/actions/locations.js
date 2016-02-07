@@ -9,7 +9,8 @@ import {
 export function selectLocation(latitude, longitude) {
   return {
     type: SELECT_LOCATION,
-    location: `${latitude}${longitude}`
+    latitude,
+    longitude
   };
 }
 

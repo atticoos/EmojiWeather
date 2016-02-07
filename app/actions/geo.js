@@ -21,18 +21,15 @@ export function locateUser() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var {latitude, longitude} = position.coords;
-        console.log('coords', position.coords);
         Geocoder.reverseGeocodeLocation({
           latitude, longitude
         }, (err, data) => {
-          console.log('response', err, data);
           var name = 'Unknown';
           var state = null;
           if (!err && data.length > 0) {
             name = data[0].locality;
             state = data[0].administrativeArea;
           }
-          console.log('wtf', data);
           dispatch(setUserLocation(
             coordinateToPrecision(latitude),
             coordinateToPrecision(longitude),
