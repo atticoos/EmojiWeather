@@ -4,6 +4,7 @@ import React, {
   Component,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
   ListView,
   View,
   Text
@@ -16,6 +17,8 @@ import * as Routes from '../constants/routes';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
 import {connect} from 'react-redux/native';
+import {selectLocation} from '../actions/locations';
+import {getWeather} from '../actions/weather';
 import selector from '../selectors/locations';
 
 class Locations extends Component {
@@ -47,9 +50,16 @@ class Locations extends Component {
       </TouchableOpacity>
     )
   }
+  selectLocation(location) {
+    this.props.dispatch(selectLocation(location.id));
+    this.props.dispatch(getWeather(location.id));
+    this.props.navigator.pop();
+  }
   renderRow(location) {
     return (
-      <View style={styles.row}>
+      <TouchableHighlight
+        onPress={() => this.selectLocation(location)}>
+        <View style={styles.row}>
         <View style={styles.left}>
           {renderIf(location.userLocation)(
             <Text style={styles.currentLocationIcon}>
@@ -60,7 +70,8 @@ class Locations extends Component {
         </View>
 
         <Text style={styles.temp}>75°</Text>
-      </View>
+        </View>
+      </TouchableHighlight>
     );
   }
   render() {
@@ -73,7 +84,7 @@ class Locations extends Component {
         <ListView
           style={styles.list}
           dataSource={this.state.dataSource}
-          renderRow={this.renderRow} />
+          renderRow={(data) => this.renderRow(data)} />
       </View>
     );
   }

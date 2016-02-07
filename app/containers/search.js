@@ -66,6 +66,7 @@ class Search extends Component {
           </TouchableOpacity>
           <View style={styles.searchWrapper}>
             <TextInput
+              autoComplete={false}
               style={styles.searchBar}
               value={this.state.query}
               onChangeText={(value) => this.onTextChange(value)} />
