@@ -14,15 +14,26 @@ import Colors from '../constants/colors';
 import {GlobalStyles} from '../constants/styles';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
-import {connect} from 'react-redux/connect';
+import {connect} from 'react-redux/native';
 import {searchLocations} from '../actions/search';
+import selector from '../selectors/search';
 
 class Search extends Component {
   constructor(props) {
     super(props);
+    var dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
     this.state = {
+      dataSource: dataSource.cloneWithRows([]),
       query: ''
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.searchResults !== nextProps.searchResults) {
+      this.state.dataSource = this.state.dataSource.cloneWithRows(nextProps.searchResults);
+      this.setState(this.state);
+    }
   }
   onTextChange(value) {
     clearTimeout(this.autocompleteTimeout);
@@ -30,10 +41,12 @@ class Search extends Component {
     this.state.query = value;
     this.setState(this.state);
   }
-  fetchAutocomplete() {
-    fetchAutocompleteResults(this.state.query).then(results => {
-      console.log('results', results);
-    });
+  renderRow(item) {
+    return (
+      <View>
+        <Text>{item.description}</Text>
+      </View>
+    )
   }
   render() {
     return (
@@ -50,7 +63,9 @@ class Search extends Component {
               onChangeText={(value) => this.onTextChange(value)} />
           </View>
         </View>
-        <Text style={{fontSize: 64}}>Search</Text>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(data) => this.renderRow(data)} />
       </View>
     );
   }
@@ -78,4 +93,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect()(Search);
+export default connect(selector)(Search);

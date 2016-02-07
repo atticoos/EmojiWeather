@@ -14,6 +14,8 @@ export function searchLocations(query) {
   return dispatch => {
     return fetchAutocompleteResults(query).then(results => {
       dispatch(setSearchResults(results.predictions));
-    });
+    }).catch(() => {
+      dispatch(setSearchResults([]));
+    })
   }
 }
