@@ -66,7 +66,7 @@ class Search extends Component {
           </TouchableOpacity>
           <View style={styles.searchWrapper}>
             <TextInput
-              autoComplete={false}
+              autoCorrect={false}
               style={styles.searchBar}
               value={this.state.query}
               onChangeText={(value) => this.onTextChange(value)} />
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   row: {
-
+    paddingVertical: 10
   },
   locationName: {
     color: '#fff',
