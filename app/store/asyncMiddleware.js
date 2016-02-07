@@ -8,11 +8,16 @@ const asyncMiddleware = ({dispatch, getState}) => next => action => {
   var {
     type,
     request,
+    shouldRequest = () => true,
     payload = {}
   } = action;
 
   if (typeof request !== 'function') {
     return next(action);
+  }
+
+  if (!shouldRequest(getState())) {
+    return;
   }
 
   dispatch({
@@ -29,6 +34,7 @@ const asyncMiddleware = ({dispatch, getState}) => next => action => {
   });
 
   const dispatchSuccess = response => dispatch({
+    ...payload,
     type,
     response,
     receivedAt: Date.now(),

@@ -9,7 +9,6 @@ const aggregatedLocationsSelector = createSelector(
   locationsSelector,
   userLocationSelector,
   (locations, userLocation) => {
-    console.log('wtf?', locations, userLocation);
     var combinedLocations = [];
     if (userLocation) {
       combinedLocations.push({
@@ -17,10 +16,15 @@ const aggregatedLocationsSelector = createSelector(
         userLocation: true
       });
     }
-    return combinedLocations.concat(locations.map(location => ({
-      ...location,
-      userLocation: false
-    })));
+
+    return combinedLocations.concat(
+      Object.keys(locations)
+        .map(locationId => locations[locationId])
+        .map(location => ({
+          ...location,
+          userLocation: false
+        }))
+    );
   }
 );
 

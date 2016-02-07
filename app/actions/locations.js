@@ -5,18 +5,22 @@ import {
   ADD_LOCATION,
   REMOVE_LOCATION
 } from './types';
+import {guid} from '../utils/utils';
 
-export function selectLocation(latitude, longitude) {
+export function selectLocation(location) {
   return {
     type: SELECT_LOCATION,
-    latitude,
-    longitude
+    location
   };
 }
 
-export function selectDefaultLocation() {
-  return (dispatch, getState) => {
-    var location = getState().locations[0];
-    return dispatch(selectLocation(location.latitude, location.longitude));
+export function addLocation(location) {
+  var id = guid();
+  return {
+    type: ADD_LOCATION,
+    location: {
+      id,
+      ...location
+    }
   };
 }

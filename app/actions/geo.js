@@ -2,6 +2,7 @@
 
 import Geocoder from 'react-native-geocoder';
 import {USER_LOCATION} from './types';
+import {CURRENT_LOCATION} from '../constants/geo';
 import {coordinateToPrecision} from '../utils/geo';
 import {selectLocation} from './locations';
 import {getWeather} from './weather';
@@ -36,11 +37,8 @@ export function locateUser() {
             name,
             state
           ));
-          dispatch(selectLocation(
-            coordinateToPrecision(latitude),
-            coordinateToPrecision(longitude)
-          ));
-          dispatch(getWeather());
+          dispatch(selectLocation(CURRENT_LOCATION));
+          dispatch(getWeather(CURRENT_LOCATION));
         });
       },
       (error) => {

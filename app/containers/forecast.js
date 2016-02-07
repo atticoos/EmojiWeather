@@ -9,7 +9,6 @@ import React, {
 } from 'react-native';
 import {connect} from 'react-redux/native';
 import {getWeather} from '../actions/weather';
-import {selectDefaultLocation} from '../actions/locations';
 import {toFahrenheit} from '../utils/converters';
 import {getEmojiByForecastIcon} from '../utils/emojis';
 import {GlobalStyles} from '../constants/styles';
@@ -24,11 +23,7 @@ import moment from 'moment';
 
 class Forecast extends Component {
   componentDidMount() {
-    this.props.dispatch(selectDefaultLocation());
-    this.props.dispatch(getWeather());
-  }
-  componentWillReceiveProps(nextProps) {
-    console.log('das weather', nextProps.weather);
+    // this.props.dispatch(getWeather(this.props.location.id));
   }
   getLeftNavItem() {
     return (
