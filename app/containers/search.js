@@ -5,6 +5,7 @@ import React, {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  ListView,
   View,
   Text
 } from 'react-native';
@@ -13,13 +14,26 @@ import Colors from '../constants/colors';
 import {GlobalStyles} from '../constants/styles';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
+import {connect} from 'react-redux/connect';
+import {searchLocations} from '../actions/search';
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: ''
+      query: ''
     };
+  }
+  onTextChange(value) {
+    clearTimeout(this.autocompleteTimeout);
+    this.autocompleteTimeout = setTimeout(() => this.props.dispatch(searchLocations(this.state.query)), 1000);
+    this.state.query = value;
+    this.setState(this.state);
+  }
+  fetchAutocomplete() {
+    fetchAutocompleteResults(this.state.query).then(results => {
+      console.log('results', results);
+    });
   }
   render() {
     return (
@@ -32,7 +46,8 @@ class Search extends Component {
           <View style={styles.searchWrapper}>
             <TextInput
               style={styles.searchBar}
-              onChangeText={(value) => console.log(value)} />
+              value={this.state.query}
+              onChangeText={(value) => this.onTextChange(value)} />
           </View>
         </View>
         <Text style={{fontSize: 64}}>Search</Text>
@@ -63,4 +78,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Search;
+export default connect()(Search);
