@@ -9,6 +9,7 @@ import React, {
 } from 'react-native';
 import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
+import {GlobalStyles} from '../constants/styles';
 import * as Routes from '../constants/routes';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
@@ -32,7 +33,7 @@ class Locations extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.container}>
         <NavBar
           leftItem={this.getLeftNavItem()}
           rightItem={this.getRightNavItem()}
@@ -44,11 +45,6 @@ class Locations extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.Blue,
-    padding: Styles.screenPadding
-  },
   back: {
     color: '#fff',
     fontSize: 28

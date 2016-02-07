@@ -10,6 +10,7 @@ import React, {
 } from 'react-native';
 import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
+import {GlobalStyles} from '../constants/styles';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
 
@@ -31,7 +32,7 @@ class Search extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.container}>
         <NavBar
           leftItem={this.getLeftNavItem()}
           centerItem={this.getSearchBar()} />
@@ -42,11 +43,6 @@ class Search extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.Blue,
-    padding: Styles.screenPadding
-  },
   done: {
     color: '#fff',
     fontSize: 18
