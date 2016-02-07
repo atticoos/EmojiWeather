@@ -15,27 +15,26 @@ import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
 
 class Search extends Component {
-  getLeftNavItem() {
-    return (
-      <TouchableOpacity
-        onPress={() => this.props.navigator.pop()}>
-        <Text style={styles.done}>Done</Text>
-      </TouchableOpacity>
-    );
-  }
-  getSearchBar() {
-    return (
-      <View style={styles.searchWrapper}>
-        <TextInput style={styles.searchBar}></TextInput>
-      </View>
-    )
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: ''
+    };
   }
   render() {
     return (
       <View style={GlobalStyles.container}>
-        <NavBar
-          leftItem={this.getLeftNavItem()}
-          centerItem={this.getSearchBar()} />
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => this.props.navigator.pop()}>
+            <Text style={styles.done}>Done</Text>
+          </TouchableOpacity>
+          <View style={styles.searchWrapper}>
+            <TextInput
+              style={styles.searchBar}
+              onChangeText={(value) => console.log(value)} />
+          </View>
+        </View>
         <Text style={{fontSize: 64}}>Search</Text>
       </View>
     );
@@ -43,19 +42,24 @@ class Search extends Component {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   done: {
     color: '#fff',
     fontSize: 18
   },
   searchWrapper: {
     flex: 1,
-    height: 30,
-    backgroundColor: 'blue'
+    height: 30
   },
   searchBar: {
     flex: 1,
     height: 30,
-    backgroundColor: 'blue'
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 5
   }
 });
 

@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <Navigator
         ref={(navigator) => this.navigator = navigator}
-        initialRoute={{name: Routes.Forecast}}
+        initialRoute={{name: Routes.Search}}
         renderScene={this.renderScene} />
     );
   }
