@@ -11,6 +11,7 @@ import {connect} from 'react-redux/native';
 import {getWeather} from '../actions/weather';
 import {selectDefaultLocation} from '../actions/locations';
 import {toFahrenheit} from '../utils/converters';
+import {getEmojiByForecastIcon} from '../utils/emojis';
 import {GlobalStyles} from '../constants/styles';
 import selector from '../selectors/forecast';
 import Emoji from 'react-native-emoji';
@@ -46,10 +47,11 @@ class Forecast extends Component {
     )
   }
   renderWeather() {
+    var weather = this.props.weather.now;
     return (
       <View style={styles.todayWeather}>
-        <Text style={styles.largeIcon}><Emoji name='partly_sunny' /></Text>
-        <Text style={styles.largeText}>{toFahrenheit(this.props.weather.now.temperature)}°</Text>
+        <Text style={styles.largeIcon}><Emoji name={getEmojiByForecastIcon(weather.icon)} /></Text>
+        <Text style={styles.largeText}>{toFahrenheit(weather.temperature)}°</Text>
       </View>
     );
   }
@@ -66,7 +68,8 @@ class Forecast extends Component {
       return <DayForecast
         key={index}
         day={forecast.date}
-        temperature={forecast.high} />
+        temperature={forecast.high}
+        icon={getEmojiByForecastIcon(forecast.icon)} />
     });
   }
   render() {

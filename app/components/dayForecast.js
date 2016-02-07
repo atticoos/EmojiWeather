@@ -13,7 +13,7 @@ class DayForecast extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.day}>{this.props.day.format('ddd').toUpperCase()}</Text>
-        <Text style={styles.icon}><Emoji name={'partly_sunny'} /></Text>
+        <Text style={styles.icon}><Emoji name={this.props.icon} /></Text>
         <Text style={styles.temp}>{Math.round(this.props.temperature)}°</Text>
       </View>
     );

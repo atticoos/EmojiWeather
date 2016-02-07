@@ -1,6 +1,6 @@
 'use strict';
 
-var iconsToEmojis = {
+const EmojiMap = {
   'clear-day': 'sunny',
   'clear-night': 'full_moon_with_face',
   'rain': 'rain_cloud',
@@ -17,7 +17,7 @@ var iconsToEmojis = {
 }
 
 export function getEmojiByForecastIcon (forecastIcon) {
-  if (forecastIcon in iconsToEmojis) {
-    return iconsToEmojis[forecastIcon];
+  if (forecastIcon in EmojiMap) {
+    return EmojiMap[forecastIcon];
   }
 }
