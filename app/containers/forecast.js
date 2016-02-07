@@ -10,6 +10,7 @@ import React, {
 import {connect} from 'react-redux/native';
 import {getWeather} from '../actions/weather';
 import {toFahrenheit} from '../utils/converters';
+import {GlobalStyles} from '../constants/styles';
 import selector from '../selectors/forecast';
 import Emoji from 'react-native-emoji';
 import Colors from '../constants/colors';
@@ -30,7 +31,7 @@ class Forecast extends Component {
     return (
       <TouchableOpacity
         onPress={() => this.props.navigator.push({name: Routes.Locations})}>
-        <Text style={styles.location}>{this.props.location.name}</Text>
+        <Text style={styles.currentLocation}>{this.props.location.name}</Text>
       </TouchableOpacity>
     );
   }
@@ -38,20 +39,25 @@ class Forecast extends Component {
     return (
       <TouchableOpacity
         onPress={() => this.props.navigator.push({name: Routes.Settings})}>
-        <Text style={styles.gear}>S</Text>
+        <Text style={styles.gear}>⚙</Text>
       </TouchableOpacity>
     )
   }
   renderWeather() {
     return (
-      <View>
-        <Text style={{fontSize: 64}}><Emoji name='partly_sunny' /></Text>
-        <Text style={{fontSize: 32}}>{toFahrenheit(this.props.weather.now.temperature)}</Text>
+      <View style={styles.todayWeather}>
+        <Text style={styles.largeIcon}><Emoji name='partly_sunny' /></Text>
+        <Text style={styles.largeText}>{toFahrenheit(this.props.weather.now.temperature)}°</Text>
       </View>
     );
   }
   renderLoading() {
-    return <Text style={{fontSize: 64}}>Loading</Text>
+    return  (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.largeIcon}><Emoji name='grimacing' /></Text>
+        <Text style={styles.largeText}>Loading</Text>
+      </View>
+    )
   }
   renderForecast() {
     return this.props.weather.upcoming.map((forecast, index) => {
@@ -63,11 +69,11 @@ class Forecast extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.container}>
         <NavBar
           leftItem={this.getLeftNavItem()}
           rightItem={this.getRightNavItem()} />
-        <View style={styles.weather}>
+        <View style={styles.content}>
           {
             this.props.weather ?
               this.renderWeather() :
@@ -83,30 +89,49 @@ class Forecast extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.Blue,
-    padding: Styles.screenPadding
-  },
   heading: {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  location: {
+  currentLocation: {
     color: '#fff',
-    fontSize: 26
+    fontSize: 24,
+    fontWeight: '600'
   },
   gear: {
     color: '#fff',
     fontSize: 22
   },
-  weather: {
+  content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  todayWeather: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  largeIcon: {
+    fontSize: 140,
+    backgroundColor: 'transparent'
+  },
+  largeText: {
+    fontSize: 84,
+    fontWeight: '700',
+    color: '#fff',
+    lineHeight: 84,
+    marginTop: -20,
+    backgroundColor: 'transparent'
+  },
   forecast: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
   }
 });
 

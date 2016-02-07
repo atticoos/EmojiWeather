@@ -9,6 +9,7 @@ import React, {
 } from 'react-native';
 import * as Routes from '../constants/routes';
 import Colors from '../constants/colors';
+import {GlobalStyles} from '../constants/styles';
 
 class Splash extends Component {
   navigateTo(route) {
@@ -16,7 +17,7 @@ class Splash extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GlobalStyles.container}>
         <TouchableHighlight onPress={() => this.navigateTo(Routes.Forecast)}>
           <Text style={styles.text}>Forecast</Text>
         </TouchableHighlight>
