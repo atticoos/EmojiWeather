@@ -11,7 +11,7 @@ export default function weatherReducer(state = {}, action) {
       let {latitude, longitude} = action.response;
       return {
         ...state,
-        [`${latitude}${longitude}`]: action.response
+        [action.location]: action.response
       };
     default:
       return state;

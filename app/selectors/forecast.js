@@ -1,28 +1,31 @@
 'use strict';
 
 import moment from 'moment';
+import {CURRENT_LOCATION} from '../constants/geo';
 import {createSelector} from 'reselect';
 
 const userLocationSelector = state => state.userLocation;
 const locationsSelector = state => state.locations;
+const selectedLocationSelector = state => state.selectedLocation;
 const allWeatherSelector = state => state.weather;
 
 const locationSelector = createSelector(
   userLocationSelector,
   locationsSelector,
-  (userLocation, locations) => {
-    if (userLocation) {
+  selectedLocationSelector,
+  (userLocation, locations, selectedLocationId) => {
+    if (selectedLocationId === CURRENT_LOCATION && userLocation) {
       return userLocation;
     }
-    return locations[0];
+    return locations[selectedLocationId];
   }
 );
 
 const weatherSelector = createSelector(
-  locationSelector,
+  selectedLocationSelector,
   allWeatherSelector,
-  (location, allWeather) => {
-    return allWeather[`${location.latitude}${location.longitude}`];
+  (locationId, allWeather) => {
+    return allWeather[locationId];
   }
 );
 

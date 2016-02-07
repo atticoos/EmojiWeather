@@ -5,22 +5,13 @@ import {
   REMOVE_LOCATION
 } from '../actions/types';
 
-const initialState = [
-  {
-    latitude: 42.3601,
-    longitude: -71.0589,
-    name: 'Boston',
-    state: 'MA'
-  }
-];
-
-export default function locationsReducer(state = initialState, action) {
+export default function locationsReducer(state = {}, action) {
   switch(action.type) {
     case ADD_LOCATION:
-      return [
+      return {
         ...state,
-        action.location
-      ];
+        [action.location.id]: action.location
+      };
     default:
       return state;
   }
