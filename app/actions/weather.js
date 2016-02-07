@@ -10,7 +10,7 @@ export function getWeather() {
   return {
     type: GET_WEATHER,
     request: (state) => {
-      var location = state.locations[0];
+      var location = state.selectedLocation;
       return getWeatherForLatLng(location.latitude, location.longitude);
     }
   };

@@ -3,12 +3,19 @@
 import moment from 'moment';
 import {createSelector} from 'reselect';
 
+const userLocationSelector = state => state.userLocation;
 const locationsSelector = state => state.locations;
 const allWeatherSelector = state => state.weather;
 
 const locationSelector = createSelector(
+  userLocationSelector,
   locationsSelector,
-  (locations) => locations[0]
+  (userLocation, locations) => {
+    if (userLocation) {
+      return userLocation;
+    }
+    return locations[0];
+  }
 );
 
 const weatherSelector = createSelector(
