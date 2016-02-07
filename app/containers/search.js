@@ -37,14 +37,14 @@ class Search extends Component {
   }
   onTextChange(value) {
     clearTimeout(this.autocompleteTimeout);
-    this.autocompleteTimeout = setTimeout(() => this.props.dispatch(searchLocations(this.state.query)), 1000);
+    this.autocompleteTimeout = setTimeout(() => this.props.dispatch(searchLocations(this.state.query)), 250);
     this.state.query = value;
     this.setState(this.state);
   }
   renderRow(item) {
     return (
-      <View>
-        <Text>{item.description}</Text>
+      <View style={styles.row}>
+        <Text style={styles.locationName}>{item.label}</Text>
       </View>
     )
   }
@@ -90,6 +90,13 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 5
+  },
+  row: {
+
+  },
+  locationName: {
+    color: '#fff',
+    fontSize: 32
   }
 });
 

@@ -14,7 +14,7 @@ export function searchLocations(query) {
   return dispatch => {
     return fetchAutocompleteResults(query).then(results => {
       dispatch(setSearchResults(results.predictions));
-    }).catch(() => {
+    }).catch((error) => {
       dispatch(setSearchResults([]));
     })
   }
