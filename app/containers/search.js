@@ -3,6 +3,7 @@
 import React, {
   Component,
   StyleSheet,
+  TouchableHighlight,
   TouchableOpacity,
   TextInput,
   ListView,
@@ -15,7 +16,7 @@ import {GlobalStyles} from '../constants/styles';
 import Styles from '../constants/styles';
 import NavBar from '../components/navBar';
 import {connect} from 'react-redux/native';
-import {searchLocations} from '../actions/search';
+import {searchLocations, selectLocation} from '../actions/search';
 import selector from '../selectors/search';
 
 class Search extends Component {
@@ -41,11 +42,18 @@ class Search extends Component {
     this.state.query = value;
     this.setState(this.state);
   }
+  selectLocation(location) {
+    this.props.dispatch(selectLocation(location)).then(() => {
+      this.props.navigator.pop();
+    })
+  }
   renderRow(item) {
     return (
-      <View style={styles.row}>
+      <TouchableHighlight
+        style={styles.row}
+        onPress={() => this.selectLocation(item)}>
         <Text style={styles.locationName}>{item.label}</Text>
-      </View>
+      </TouchableHighlight>
     )
   }
   render() {

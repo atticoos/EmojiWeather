@@ -1,7 +1,8 @@
 'use strict';
 
 import {SEARCH_LOCATIONS} from './types';
-import {fetchAutocompleteResults} from '../utils/locationSearch';
+import {fetchAutocompleteResults, fetchLocation} from '../utils/locationSearch';
+import {addLocation} from './locations';
 
 function setSearchResults(results) {
   return {
@@ -18,4 +19,18 @@ export function searchLocations(query) {
       dispatch(setSearchResults([]));
     })
   }
+}
+
+export function selectLocation(location) {
+  return dispatch => {
+    return fetchLocation(location.place_id).then(response => {
+      var result = response.result;
+      return dispatch(addLocation({
+        latitude: result.geometry.location.lat,
+        longitude: result.geometry.location.lng,
+        name: location.terms[0].value,
+        state: location.terms[1].value
+      }));
+    });
+  };
 }
